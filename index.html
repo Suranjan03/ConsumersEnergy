@@ -27,6 +27,58 @@
       deploymentId: '23e8d56b-ad95-4caa-89b6-a4a390965198'
     });
   </script>
+
+  <!-- 🔹 Floating Assistant Styles -->
+  <style>
+    .floating-assistant {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: linear-gradient(135deg, #2dbe60, #22a455);
+      color: white;
+      padding: 14px 18px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(45,190,96,0.35);
+      font-size: 14px;
+      font-weight: 600;
+      z-index: 9999;
+      transition: all 0.3s ease;
+      animation: pulse 3s infinite;
+    }
+
+    .floating-assistant:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(45,190,96,0.45);
+      animation: none;
+    }
+
+    .assistant-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(45,190,96,0.5); }
+      70% { box-shadow: 0 0 0 14px rgba(45,190,96,0); }
+      100% { box-shadow: 0 0 0 0 rgba(45,190,96,0); }
+    }
+
+    @media (max-width: 600px) {
+      .floating-assistant span {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -50,11 +102,6 @@
         Meet the AI-powered Digital Assistant helping Consumers Energy customers
         with outages, billing, service requests, and efficiency insights.
       </p>
-
-      <div class="cta-group fade-up delay-2">
-        <button id="open-chat">Start Conversation</button>
-        <span class="subtext">Secure · Always on · No wait times</span>
-      </div>
     </div>
   </section>
 
@@ -79,9 +126,15 @@
     <p>Demo experience powered by Genesys Cloud</p>
   </footer>
 
-  <!-- ✅ Messenger Control -->
+  <!-- 🔹 Floating Assistant Button -->
+  <div class="floating-assistant" id="floating-assistant">
+    <div class="assistant-icon">💬</div>
+    <span>Need help?</span>
+  </div>
+
+  <!-- 🔹 Messenger Control -->
   <script>
-    document.getElementById("open-chat").addEventListener("click", function () {
+    document.getElementById("floating-assistant").addEventListener("click", function () {
       Genesys("command", "Messenger.open");
     });
 
