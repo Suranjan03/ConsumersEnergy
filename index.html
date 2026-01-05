@@ -10,19 +10,97 @@
 
   <!-- Genesys Web Messenger -->
   <script type="text/javascript" charset="utf-8">
-  (function (g, e, n, es, ys) {
-    g['_genesysJs'] = e;
-    g[e] = g[e] || function () {
-      (g[e].q = g[e].q || []).push(arguments)
-    };
-    g[e].t = 1 * new Date();
-    g[e].c = es;
-    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
-  })(window, 'Genesys', 'https://apps.usw2.pure.cloud/genesys-bootstrap/genesys.min.js', {
-    environment: 'prod-usw2',
-    deploymentId: '23e8d56b-ad95-4caa-89b6-a4a390965198'
-  });
-</script>
+    (function (g, e, n, es, ys) {
+      g['_genesysJs'] = e;
+      g[e] = g[e] || function () {
+        (g[e].q = g[e].q || []).push(arguments)
+      };
+      g[e].t = 1 * new Date();
+      g[e].c = es;
+      ys = document.createElement('script');
+      ys.async = 1;
+      ys.src = n;
+      ys.charset = 'utf-8';
+      document.head.appendChild(ys);
+    })(window, 'Genesys', 'https://apps.usw2.pure.cloud/genesys-bootstrap/genesys.min.js', {
+      environment: 'prod-usw2',
+      deploymentId: '23e8d56b-ad95-4caa-89b6-a4a390965198'
+    });
+  </script>
+
+  <!-- 🔹 Inline styles ONLY for modal + loader -->
+  <style>
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .modal {
+      background: #ffffff;
+      padding: 28px 32px;
+      border-radius: 14px;
+      width: 360px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    }
+
+    .modal h3 {
+      margin-top: 0;
+      color: #003a8f;
+    }
+
+    .modal p {
+      font-size: 14px;
+      color: #4b5563;
+      margin-bottom: 24px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .modal-actions button {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .confirm {
+      background: #2dbe60;
+      color: white;
+      border: none;
+    }
+
+    .cancel {
+      background: #ffffff;
+      color: #003a8f;
+      border: 2px solid #003a8f;
+    }
+
+    /* Loader */
+    .loader {
+      width: 36px;
+      height: 36px;
+      border: 4px solid #e5e7eb;
+      border-top: 4px solid #2dbe60;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 16px auto 0;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 
 <body>
@@ -76,16 +154,58 @@
     <p>Demo experience powered by Genesys Cloud</p>
   </footer>
 
+  <!-- 🔹 Reset Confirmation Modal -->
+  <div class="modal-overlay" id="reset-modal">
+    <div class="modal">
+      <h3>Start a new session?</h3>
+      <p>This will clear the current conversation and start fresh.</p>
+
+      <div class="modal-actions">
+        <button class="cancel" id="cancel-reset">Cancel</button>
+        <button class="confirm" id="confirm-reset">Yes, reset</button>
+      </div>
+
+      <div class="loader" id="reset-loader"></div>
+    </div>
+  </div>
+
+  <!-- ✅ FIXED SCRIPT -->
   <script>
-    document.getElementById("open-chat").addEventListener("click", function () {
+    const resetModal = document.getElementById("reset-modal");
+    const loader = document.getElementById("reset-loader");
+
+    document.getElementById("open-chat").addEventListener("click", () => {
       Genesys("command", "Messenger.open");
     });
 
-    document.getElementById("reset-chat").addEventListener("click", function () {
-      Genesys("command", "Messenger.clear");
-      Genesys("command", "Messenger.open");
+    document.getElementById("reset-chat").addEventListener("click", () => {
+      resetModal.style.display = "flex";
     });
 
+    document.getElementById("cancel-reset").addEventListener("click", () => {
+      resetModal.style.display = "none";
+    });
+
+    document.getElementById("confirm-reset").addEventListener("click", () => {
+      loader.style.display = "block";
+
+      // Step 1: Close messenger
+      Genesys("command", "Messenger.close");
+
+      // Step 2: Clear conversation
+      setTimeout(() => {
+        Genesys("command", "Messenger.clear");
+      }, 300);
+
+      // Step 3: Reopen fresh session
+      setTimeout(() => {
+        Genesys("command", "Messenger.open");
+        loader.style.display = "none";
+        resetModal.style.display = "none";
+      }, 900);
+    });
+
+    // Demo context
     Genesys("command", "Database.set", {
       messaging: {
         customAttributes: {
