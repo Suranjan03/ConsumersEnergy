@@ -2,13 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Consumers Energy | AI Digital Assistant</title>
+  <title>Consumers Energy | Digital Assistant</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Genesys Web Messenger -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f7f9fc;
+      color: #1a1a1a;
+    }
+
+    header {
+      height: 72px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+
+    header img {
+      height: 34px;
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: flex;
+      align-items: center;
+      padding: 0 10%;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, #003a8f, #2dbe60);
+      opacity: 0.08;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 720px;
+    }
+
+    h1 {
+      font-size: 52px;
+      font-weight: 700;
+      color: #003a8f;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #374151;
+      margin-bottom: 32px;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    button {
+      background: linear-gradient(135deg, #2dbe60, #22a455);
+      color: white;
+      border: none;
+      padding: 18px 36px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(45,190,96,0.35);
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+    }
+
+    .secondary {
+      background: #ffffff;
+      color: #003a8f;
+      border: 2px solid #003a8f;
+      box-shadow: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 14px;
+      color: #9ca3af;
+    }
+  </style>
+
+  <!-- ✅ GENESYS SNIPPET (UNCHANGED, CORRECT) -->
   <script type="text/javascript" charset="utf-8">
     (function (g, e, n, es, ys) {
       g['_genesysJs'] = e;
@@ -31,55 +125,31 @@
 
 <body>
 
-  <header class="navbar">
-    <div class="nav-left">
-      <img src="CE logo.png" alt="Consumers Energy" />
-    </div>
-    <div class="nav-right">
-      <span class="nav-pill">Secure</span>
-      <span class="nav-pill green">24×7 Support</span>
-    </div>
+  <header>
+    <img src="logo.svg" alt="Consumers Energy">
+    <span style="font-size:14px;color:#6b7280">Secure · Official Assistant</span>
   </header>
 
   <section class="hero">
-    <div class="hero-bg"></div>
-
     <div class="hero-content">
-      <h1 class="fade-up">Smarter Energy Support,<br/>Instantly.</h1>
-      <p class="fade-up delay-1">
-        Meet the AI-powered Digital Assistant helping Consumers Energy customers
-        with outages, billing, service requests, and efficiency insights.
+      <h1>How can we help you today?</h1>
+      <p>
+        Get instant, secure assistance for outages, billing, payments,
+        service requests, and energy efficiency — available 24×7.
       </p>
 
-      <div class="cta-group fade-up delay-2">
-        <button id="open-chat">Start Conversation</button>
+      <div class="cta-group">
+        <button id="open-chat">Start a Conversation</button>
         <button class="secondary" id="reset-chat">Reset Conversation</button>
-        <span class="subtext">Demo-friendly · Secure · Always on</span>
       </div>
     </div>
   </section>
 
-  <section class="features">
-    <div class="feature-card slide-in">
-      <h3>⚡ Outage Assistance</h3>
-      <p>Real-time outage status, restoration ETAs, and proactive updates.</p>
-    </div>
-
-    <div class="feature-card slide-in delay-1">
-      <h3>💳 Billing & Payments</h3>
-      <p>View bills, understand charges, payment help and due reminders.</p>
-    </div>
-
-    <div class="feature-card slide-in delay-2">
-      <h3>🌱 Energy Efficiency</h3>
-      <p>Personalized tips to save energy and reduce monthly costs.</p>
-    </div>
-  </section>
-
   <footer>
-    <p>Demo experience powered by Genesys Cloud</p>
+    Demo experience powered by Genesys Cloud
   </footer>
 
+  <!-- ✅ MESSENGER COMMANDS -->
   <script>
     document.getElementById("open-chat").addEventListener("click", function () {
       Genesys("command", "Messenger.open");
@@ -90,11 +160,12 @@
       Genesys("command", "Messenger.open");
     });
 
+    // Inject clean demo context
     Genesys("command", "Database.set", {
       messaging: {
         customAttributes: {
-          demoMode: "ClientDemo",
-          customerType: "Residential"
+          demoMode: "ConsumersEnergyDemo",
+          channel: "Web"
         }
       }
     });
