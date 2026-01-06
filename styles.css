@@ -1,66 +1,175 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
 
-/* ===== Option A: CSS-only brand wallpaper (Consumers Energy) ===== */
-/* Uses CE website colors: Blue #1565C0, Green #188431.
-   Subtle animated parallax; honors dark mode and reduced motion. */
-
-/* Global reset (optional; comment out if you already define this) */
-* { box-sizing: border-box; }
-
-/* --- Base background: layered energy waves --- */
 body {
   margin: 0;
-  color: #101828;
+  background: #f7f9fc;
+  color: #1a1a1a;
   overflow-x: hidden;
-
-  /* Layered background: soft radial blobs + conic wave tint */
-  background:
-    radial-gradient(1200px 520px at 12% 10%, rgba(21,101,192,0.12), transparent 64%),
-    radial-gradient(900px 420px at 88% 12%, rgba(24,132,49,0.10), transparent 60%),
-    conic-gradient(from 210deg at 50% 50%, rgba(21,101,192,0.08), rgba(24,132,49,0.08), rgba(21,101,192,0.08));
-
-  /* Base surface */
-  background-color: #f7f9fc;
-
-  /* Typography baseline (optional) */
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
 }
 
-/* Soft animated parallax on larger screens */
-@media (min-width: 768px) {
-  body {
-    animation: bgFloat 16s ease-in-out infinite;
-    background-attachment: fixed;                 /* locks layers for subtle parallax */
-    background-size: 100% 100%, 100% 100%, 140% 140%;
-  }
+.navbar {
+  height: 72px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-@keyframes bgFloat {
-  0%   { background-position: 0% 0%, 100% 0%, 50% 50%; }
-  50%  { background-position: 2% 1%, 99% 2%, 48% 52%; }
-  100% { background-position: 0% 0%, 100% 0%, 50% 50%; }
+.navbar img {
+  height: 34px;
 }
 
-/* Prefer-reduced-motion: disable parallax for accessibility */
-@media (prefers-reduced-motion: reduce) {
-  body { animation: none; }
+.nav-pill {
+  background: #eef2ff;
+  color: #003a8f;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-left: 8px;
 }
 
-/* --- Dark mode harmony --- */
-@media (prefers-color-scheme: dark) {
-  body {
-    color: #E2E8F0;
-    background-color: #0B1220;
-    background:
-      radial-gradient(1200px 520px at 12% 10%, rgba(21,101,192,0.22), transparent 64%),
-      radial-gradient(900px 420px at 88% 12%, rgba(24,132,49,0.18), transparent 60%),
-      conic-gradient(from 210deg at 50% 50%, rgba(21,101,192,0.14), rgba(24,132,49,0.14), rgba(21,101,192,0.14));
-  }
+.nav-pill.green {
+  background: #e6f7ef;
+  color: #2dbe60;
 }
 
-/* --- Optional: make the hero section blend with wallpaper --- */
-/* If you have a .hero wrapper, this gives a modern glass surface. */
 .hero {
   position: relative;
+  height: 85vh;
+  display: flex;
+  align-items: center;
+  padding: 0 10%;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, #003a8f, #2dbe60);
+  opacity: 0.08;
+}
+
+.hero-content {
+  position: relative;
+  max-width: 720px;
+}
+
+.hero h1 {
+  font-size: 52px;
+  font-weight: 700;
+  color: #003a8f;
+}
+
+.hero p {
+  font-size: 19px;
+  color: #374151;
+  margin: 24px 0;
+}
+
+.cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.subtext {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+button {
+  background: linear-gradient(135deg, #2dbe60, #22a455);
+  color: white;
+  border: none;
+  padding: 18px 36px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  width: fit-content;
+  box-shadow: 0 10px 30px rgba(45,190,96,0.35);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-3px);
+}
+
+button.secondary {
+  background: #ffffff;
+  color: #003a8f;
+  border: 2px solid #003a8f;
+  box-shadow: none;
+}
+
+button.secondary:hover {
+  background: #003a8f;
+  color: #ffffff;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  padding: 80px 10%;
+  background: #ffffff;
+}
+
+.feature-card {
+  background: #f9fafb;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.05);
+}
+
+.feature-card h3 {
+  margin-top: 0;
+  color: #003a8f;
+}
+
+.feature-card p {
+  color: #4b5563;
+}
+
+footer {
+  padding: 32px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.fade-up {
+  animation: fadeUp 1s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+
+.slide-in {
+  animation: slideIn 1s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+.hero {
+  position: relative;
+  height: auto; /* let content define height */
   background: rgba(255,255,255,0.75);
   backdrop-filter: saturate(140%) blur(4px);
   border: 1px solid #E5E7EB;
@@ -70,35 +179,9 @@ body {
 
 @media (prefers-color-scheme: dark) {
   .hero {
-    background: rgba(15,23,42,0.65);
+    background: rgba(15,23,42,0.65); /* dark glass */
     border-color: #1F2E4A;
     box-shadow: 0 16px 42px rgba(0,0,0,0.35);
   }
 }
 
-/* --- Minor polish for cards/buttons (optional) --- */
-.card {
-  background: #ffffff;
-  border: 1px solid #E5E7EB;
-  border-radius: 12px;
-  box-shadow: 0 10px 26px rgba(16,24,40,0.08);
-}
-
-button.primary {
-  background: #1565C0;        /* CE website blue */
-  border: 1px solid #1565C0;
-  color: #fff;
-}
-button.primary:hover {
-  background: #0f57a8;
-  border-color: #0f57a8;
-}
-
-button.ghost {
-  background: transparent;
-  border: 1px solid #E5E7EB;
-  color: #101828;
-}
-button.ghost:hover {
-  box-shadow: 0 10px 28px rgba(16,24,40,0.10);
-}
