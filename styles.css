@@ -166,21 +166,3 @@ footer {
   to { opacity: 1; transform: translateY(0); }
 }
 
-
-.hero {
-  position: relative;
-  height: auto; /* let content define height */
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: saturate(140%) blur(4px);
-  border: 1px solid #E5E7EB;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(16,24,40,0.10);
-}
-
-@media (prefers-color-scheme: dark) {
-  .hero {
-    background: rgba(15,23,42,0.65); /* dark glass */
-    border-color: #1F2E4A;
-    box-shadow: 0 16px 42px rgba(0,0,0,0.35);
-  }
-}
